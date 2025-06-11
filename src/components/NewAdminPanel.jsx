@@ -7,22 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { LogOut, PlusSquare, ExternalLink, Trash2, Edit3, XSquare, CheckSquare, Link, Shield, Settings, Briefcase, User, Gamepad2, MessageSquare, Code2, DollarSign, Grid, List, AlertTriangle, Terminal, Activity, Wifi, Server, Database, Cat } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
-export const NewAdminPanel = ({ onLogout }) => {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-8">
-      <h1 className="text-4xl font-bold mb-4">Admin Console</h1>
-      <p className="mb-8 text-lg text-gray-400">Welcome to the MLVS District Console Panel.</p>
-
-      {/* 🚪 Logout Button */}
-      <button
-        onClick={onLogout}
-        className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all"
-      >
-        Logout
-      </button>
-    </div>
-  );
-};
 
 const GlitchText = ({ children, className, intensity = 'medium' }) => {
   const baseClass = "relative inline-block";
@@ -143,6 +127,13 @@ export function NewAdminPanel({ onLogout }) {
   const [showDancingCat, setShowDancingCat] = useState(false);
 
 
+        {/* 🚪 Logout Button */}
+      <button
+        onClick={onLogout}
+        className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all"
+      >
+        Logout
+      </button>
   const categories = ['General', 'Work', 'Personal', 'Development', 'Tools', 'Entertainment', 'Social', 'Finance', 'System', 'Matrix', 'Archives', 'Comms'];
   const iconMap = {
     Link: <Link />, Shield: <Shield />, Settings: <Settings />, Briefcase: <Briefcase />, User: <User />,
