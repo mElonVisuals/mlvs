@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import Login from './pages/Login';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingPage } from '@/components/LandingPage';
 import { LoginForm } from '@/components/LoginForm';
