@@ -6,7 +6,6 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { LogOut, PlusSquare, ExternalLink, Trash2, Edit3, XSquare, CheckSquare, Link, Shield, Settings, Briefcase, User, Gamepad2, MessageSquare, Code2, DollarSign, Grid, List, AlertTriangle, Terminal, Activity, Wifi, Server, Database, Cat } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import React from 'react';
 
 export const NewAdminPanel = ({ onLogout }) => {
   return (
