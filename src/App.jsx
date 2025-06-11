@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
-import Login from './pages/Login';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingPage } from '@/components/LandingPage';
 import { LoginForm } from '@/components/LoginForm';
-import { NewAdminPanel } from '@/components/NewAdminPanel'; // Changed to NewAdminPanel
+import { NewAdminPanel } from '@/components/NewAdminPanel';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/hooks/useAuth';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -20,14 +18,14 @@ function App() {
   const handleLogin = (password) => {
     const success = login(password);
     if (success) {
-      setShowLogin(false); 
+      setShowLogin(false);
     }
     return success;
   };
 
   const handleLogout = () => {
     logout();
-    setShowLogin(false); 
+    setShowLogin(false);
   };
 
   if (isLoading) {
@@ -35,40 +33,39 @@ function App() {
       <div className="min-h-screen flex items-center justify-center cyberpunk-rp-bg">
         <motion.div
           animate={{ rotate: [0, 360, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="w-16 h-16 border-4 border-primary border-t-transparent border-b-secondary rounded-full"
         ></motion.div>
         <p className="ml-4 text-xl text-secondary tracking-widest animate-pulse">SYSTEM_CORE_ONLINE...</p>
       </div>
     );
   }
-  
+
   const pageVariants = {
-    initial: { opacity: 0, filter: "blur(10px)", x: "-50vw", scale: 0.9 },
-    in: { opacity: 1, filter: "blur(0px)", x: 0, scale: 1 },
-    out: { opacity: 0, filter: "blur(10px)", x: "50vw", scale: 0.9 }
+    initial: { opacity: 0, filter: 'blur(10px)', x: '-50vw', scale: 0.9 },
+    in: { opacity: 1, filter: 'blur(0px)', x: 0, scale: 1 },
+    out: { opacity: 0, filter: 'blur(10px)', x: '50vw', scale: 0.9 },
   };
 
   const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
-    duration: 0.75
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.75,
   };
-
 
   return (
     <Router>
       <div className="App">
         <AnimatePresence mode="wait">
           <Routes>
-            <Route 
-              path="/" 
+            <Route
+              path="/"
               element={
                 isAuthenticated ? (
-                  <Navigate to="/console" replace /> // Changed to /console
+                  <Navigate to="/console" replace />
                 ) : showLogin ? (
                   <motion.div
-                    key="login"
+                    key="login-modal"
                     initial="initial"
                     animate="in"
                     exit="out"
@@ -89,27 +86,51 @@ function App() {
                     <LandingPage onLoginClick={handleLoginClick} />
                   </motion.div>
                 )
-              } 
+              }
             />
-            <Route 
-              path="/console" // Changed to /console
+
+            {/* 🔐 Direct login route */}
+            <Route
+              path="/login"
               element={
                 isAuthenticated ? (
+                  <Navigate to="/console" replace />
+                ) : (
                   <motion.div
-                    key="admin" // Key can remain admin for transition group
+                    key="login-page"
                     initial="initial"
                     animate="in"
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}
                   >
-                    <NewAdminPanel onLogout={handleLogout} /> {/* Changed to NewAdminPanel */}
+                    <LoginForm onLogin={handleLogin} />
+                  </motion.div>
+                )
+              }
+            />
+
+            <Route
+              path="/console"
+              element={
+                isAuthenticated ? (
+                  <motion.div
+                    key="admin"
+                    initial="initial"
+                    animate="in"
+                    exit="out"
+                    variants={pageVariants}
+                    transition={pageTransition}
+                  >
+                    <NewAdminPanel onLogout={handleLogout} />
                   </motion.div>
                 ) : (
                   <Navigate to="/" replace />
                 )
-              } 
+              }
             />
+
+            {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AnimatePresence>
